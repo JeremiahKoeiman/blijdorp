@@ -1,17 +1,14 @@
 package com.example.blijdorp;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.InflateException;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -19,8 +16,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "DocSnippets";
-    Context context = this;
-    View row_view;
+
+
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -36,18 +33,13 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            Log.d(TAG, document.getId() + " => " + "naam: " + document.get("naam") + ", video_url: " + document.get("video_url") + ", voedertijd: " + document.get("voedertijd"));
 
-                            //LayoutInflater inflater = getLayoutInflater();
-                            //View viewAnimalItem = inflater.inflate(R.layout.animal_item, null);
+                            Timestamp timestamp = (Timestamp) document.get("voedertijd");
+                            String yeah = timestamp.toDate().toString();
 
+                            Log.d(TAG, yeah);
 
-                            try {
-                                LayoutInflater inflater = getLayoutInflater();
-                                row_view = inflater.createView("R.layout.animal_item", null, null);
-                            } catch (ClassNotFoundException | InflateException e) {
-                                System.out.println(e.getMessage());
-                            }
                         }
                     } else {
                         Log.w(TAG, "Error getting documents.", task.getException());
