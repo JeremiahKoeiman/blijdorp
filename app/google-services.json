@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "501354091518",
+    "project_id": "blijdorp-197a7",
+    "storage_bucket": "blijdorp-197a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501354091518:android:623fae1e723608ca96e6af",
+        "android_client_info": {
+          "package_name": "com.example.blijdorp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501354091518-b5ucvt0pisule0suete255icr37itgau.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blijdorp",
+            "certificate_hash": "9c0c86a5749eab988fe1860e1df0996f5030f455"
+          }
+        },
+        {
+          "client_id": "501354091518-e4id5lmgoob5ajlpkgp973a5631sdu5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuaIEW-fngMrmJVnLTh6yM3Yq_XiREZY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501354091518-e4id5lmgoob5ajlpkgp973a5631sdu5v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
