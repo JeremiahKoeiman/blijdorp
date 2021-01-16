@@ -147,7 +147,12 @@ public class MainActivity extends AppCompatActivity {
 
             // Add the dynamic values to the animal_item.xml layout
             myAnimalName.setText(rName[position]);
-            myFeedingTime.setText("Voedertijd: " + rFeedingTime[position]);
+
+            if (rFeedingTime[position] == null) {
+                myFeedingTime.setText("Voedertijd: ");
+            } else {
+                myFeedingTime.setText("Voedertijd: " + rFeedingTime[position]);
+            }
 
             return row;
         }
