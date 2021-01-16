@@ -1,5 +1,6 @@
 package com.example.blijdorp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             this.rFeedingTime = feedingTime;
         }
 
+        @SuppressLint("SetTextI18n")
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             WebView myDisplayVideo = row.findViewById(R.id.displayVideo);
 
             myAnimalName.setText(rName[position]);
-            myFeedingTime.setText(rFeedingTime[position]);
+            myFeedingTime.setText("Voedertijd: " + rFeedingTime[position]);
 
             return row;
         }
