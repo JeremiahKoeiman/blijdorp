@@ -29,12 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "DocSnippets";
 
+    // Initialize global properties
     ListView listView;
     String[] mId = new String[4];
     String[] mName = new String[4];
     String[] mVideoUrl = new String[4];
     String[] mFeedingTime = new String[4];
 
+    // Get a Firestore instance
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -42,18 +44,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get all the documents from the "dieren" collection
         db.collection("dieren")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
 
+                        // Loop through each document
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
+                            // Get the document's id and store it in docId, which is of type int
                             int docId = Integer.parseInt(document.getId());
 
+                            // Get the "voedertijd" field from th document and store it in timestamp, which is of type Timestamp
                             Timestamp timestamp = (Timestamp) document.get("voedertijd");
+
+                            // Format saved timestamp, cast it to a string and store it in formattedTimestamp, which is of type String
                             String formattedTimestamp = timestamp.toDate().toString();
 
+                            // Add the previously saved data to it's corresponding global String array property
                             mId[docId] = Integer.toString(docId);
                             mName[docId] = (String) document.get("naam");
                             mVideoUrl[docId] = (String) document.get("video_url");
@@ -73,12 +82,14 @@ public class MainActivity extends AppCompatActivity {
 
     class MyAdapter extends ArrayAdapter<String> {
 
+        // Instantiate global properties
         Context context;
         String[] rId;
         String[] rName;
         String[] rVideoUrl;
         String[] rFeedingTime;
 
+        // Instantiate constructor
         MyAdapter(Context c, String[] id, String[] name, String[] feedingTime, String[] videoUrl) {
             super(c, R.layout.animal_item, id);
             this.context = c;
@@ -88,11 +99,14 @@ public class MainActivity extends AppCompatActivity {
             this.rFeedingTime = feedingTime;
         }
 
+        // Create the necessary layout using the animal_item.xml
         @SuppressLint("SetTextI18n")
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(context);
+
+            // Get the necessary views from the animal_item.xml layout
             View row = inflater.inflate(R.layout.animal_item, parent, false);
 
             // TODO: the card gets the id of the document
@@ -107,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
             // TODO: show video
             WebView myDisplayVideo = row.findViewById(R.id.displayVideo);
 
+
+
+
+
+            // Add the dynamic values to the animal_item.xml layout
             myAnimalName.setText(rName[position]);
             myFeedingTime.setText("Voedertijd: " + rFeedingTime[position]);
 
