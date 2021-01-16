@@ -1,14 +1,17 @@
 package com.example.blijdorp;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -25,11 +29,17 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "DocSnippets";
 
     // Initialize global properties
+    TextView incomingTime;
     ListView listView;
     String[] mId = new String[4];
     String[] mName = new String[4];
@@ -39,10 +49,14 @@ public class MainActivity extends AppCompatActivity {
     // Get a Firestore instance
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        incomingTime = (TextView) findViewById(R.id.incomingTime);
+        incomingTime.setText("BINNENKOMST TIJD: " + new Date().getHours() + ":" + new Date().getMinutes());
 
         // Get all the documents from the "dieren" collection
         db.collection("dieren")
@@ -110,19 +124,25 @@ public class MainActivity extends AppCompatActivity {
             View row = inflater.inflate(R.layout.animal_item, parent, false);
 
             // TODO: the card gets the id of the document
-            CardView myCard = row.findViewById(R.id.card_view);
+            CardView myCard = (CardView) row.findViewById(R.id.card_view);
 
             // TODO: The button sets the visibility of the Webview
-            Button myShowVideo = row.findViewById(R.id.showVideo);
+            Button myShowVideo = (Button) row.findViewById(R.id.showVideo);
 
-            TextView myAnimalName = row.findViewById(R.id.animalName);
-            TextView myFeedingTime = row.findViewById(R.id.feedingTime);
+            TextView myAnimalName = (TextView) row.findViewById(R.id.animalName);
+            TextView myFeedingTime = (TextView) row.findViewById(R.id.feedingTime);
 
             // TODO: show video
-            WebView myDisplayVideo = row.findViewById(R.id.displayVideo);
+            WebView myDisplayVideo = (WebView) row.findViewById(R.id.displayVideo);
 
 
-
+            // Implement onClick handler for myShowVideo button
+            myShowVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDisplayVideo.loadUrl(rVideoUrl[position]);
+                }
+            });
 
 
             // Add the dynamic values to the animal_item.xml layout
