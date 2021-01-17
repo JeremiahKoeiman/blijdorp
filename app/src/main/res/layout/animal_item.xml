@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/animalName" />
 
             <TextView
-                android:id="@+id/feedingTime"
+                android:id="@+id/acutalComment"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="25dp"
@@ -70,16 +70,55 @@
                 android:text="Show Video"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feedingTime" />
+                app:layout_constraintTop_toBottomOf="@+id/acutalComment" />
 
             <WebView
                 android:id="@+id/displayVideo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/showVideo"/>
+                app:layout_constraintTop_toBottomOf="@+id/showVideo">
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="390dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="#CD000000" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <TextView
+                        android:id="@+id/acutalComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="25dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="Voeder tijd: 15:55"
+                        android:textSize="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </WebView>
+
+            <Button
+                android:id="@+id/showComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Show comments"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/displayVideo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
