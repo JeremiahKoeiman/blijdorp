@@ -48,7 +48,7 @@ public class MyAdapter extends ArrayAdapter<String> {
 
         Button myShowVideo = (Button) row.findViewById(R.id.showVideo);
         TextView myAnimalName = (TextView) row.findViewById(R.id.animalName);
-        TextView myFeedingTime = (TextView) row.findViewById(R.id.feedingTime);
+        TextView myFeedingTime = (TextView) row.findViewById(R.id.acutalComment);
         WebView myDisplayVideo = (WebView) row.findViewById(R.id.displayVideo);
 
 
