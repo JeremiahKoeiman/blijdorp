@@ -21,16 +21,16 @@ public class MainActivity extends AppCompatActivity {
 
     // Initialize global properties
     TextView incomingTime;
-    ListView listView;
+    ListView animalListView;
     String[] mId = new String[4];
     String[] mName = new String[4];
     String[] mVideoUrl = new String[4];
     String[] mFeedingTime = new String[4];
+    String[] url = new String[4];
 
     // Get a Firestore instance
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,40 +41,42 @@ public class MainActivity extends AppCompatActivity {
 
         getAllDocuments();
 
-        listView = findViewById(R.id.listView);
+        animalListView = findViewById(R.id.listView);
         MyAdapter adapter = new MyAdapter(this, mId, mName, mFeedingTime, mVideoUrl);
-        listView.setAdapter(adapter);
-
+        animalListView.setAdapter(adapter);
     }
 
     // Get all the documents from the "dieren" collection
     protected void getAllDocuments() {
         db.collection("dieren")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+            .get()
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
 
-                        // Loop through each document
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                    // Loop through each document
+                    for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            // Get the document's id and store it in docId, which is of type int
-                            int docId = Integer.parseInt(document.getId());
+                        // Get the document's id and store it in docId, which is of type int
+                        int docId = Integer.parseInt(document.getId());
 
-                            // Get the "voedertijd" field from th document and store it in timestamp, which is of type Timestamp
-                            Timestamp timestamp = (Timestamp) document.get("voedertijd");
+                        // Get the "voedertijd" field from th document and store it in timestamp, which is of type Timestamp
+                        Timestamp timestamp = (Timestamp) document.get("voedertijd");
 
-                            // Format saved timestamp, cast it to a string and store it in formattedTimestamp, which is of type String
-                            String formattedTimestamp = timestamp.toDate().toString();
+                        // Format saved timestamp, cast it to a string and store it in formattedTimestamp, which is of type String
+                        String formattedTimestamp = timestamp.toDate().toString();
 
-                            // Add the previously saved data to it's corresponding global String array property
-                            mId[docId] = Integer.toString(docId);
-                            mName[docId] = (String) document.get("naam");
-                            mVideoUrl[docId] = (String) document.get("video_url");
-                            mFeedingTime[docId] = formattedTimestamp;
-                        }
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
+                        url[docId] =
+
+                        // Add the previously saved data to it's corresponding global String array property
+                        mId[docId] = Integer.toString(docId);
+                        mName[docId] = (String) document.get("naam");
+                        mVideoUrl[docId] = (String) document.get("video_url");
+                        mFeedingTime[docId] = formattedTimestamp;
                     }
-                });
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.getException());
+                }
+            });
     }
+
 }

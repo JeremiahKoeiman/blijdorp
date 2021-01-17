@@ -2,6 +2,8 @@ package com.example.blijdorp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ public class MyAdapter extends ArrayAdapter<String> {
     String[] rName;
     String[] rVideoUrl;
     String[] rFeedingTime;
+
+    public static final String EXTRA_MESSAGE = "com.example.blijdorp.extra.MESSAGE";
 
     // Instantiate constructor
     MyAdapter(Context c, String[] id, String[] name, String[] feedingTime, String[] videoUrl) {
@@ -44,12 +48,13 @@ public class MyAdapter extends ArrayAdapter<String> {
         View row = inflater.inflate(R.layout.animal_item, parent, false);
 
         // TODO: the card gets the id of the document
-        CardView myCard = (CardView) row.findViewById(R.id.card_view);
+        CardView myCard = row.findViewById(R.id.card_view);
 
-        Button myShowVideo = (Button) row.findViewById(R.id.showVideo);
-        TextView myAnimalName = (TextView) row.findViewById(R.id.animalName);
-        TextView myFeedingTime = (TextView) row.findViewById(R.id.acutalComment);
-        WebView myDisplayVideo = (WebView) row.findViewById(R.id.displayVideo);
+        Button myShowVideo = row.findViewById(R.id.showVideo);
+        TextView myAnimalName = row.findViewById(R.id.animalName);
+        TextView myFeedingTime = row.findViewById(R.id.feedingTime);
+        WebView myDisplayVideo = row.findViewById(R.id.displayVideo);
+        Button myShowComments = row.findViewById(R.id.showComments);
 
 
         // Implement onClick handler for myShowVideo button
@@ -62,6 +67,18 @@ public class MyAdapter extends ArrayAdapter<String> {
 
         // Add the dynamic values to the animal_item.xml layout
         myAnimalName.setText(rName[position]);
+
+        myShowComments.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Comment.class);
+                String messageVideoUrl = rVideoUrl[position];
+                intent.putExtra(EXTRA_MESSAGE, messageVideoUrl);
+                context.startActivity(intent);
+                //Log.d("INTENT: ", messageVideoUrl);
+            }
+        });
 
         if (rFeedingTime[position] == null) {
             myFeedingTime.setText("Voedertijd: ");
